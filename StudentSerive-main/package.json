@@ -1,0 +1,21 @@
+{
+  "name": "studentservice",
+  "version": "1.0.0",
+  "description": "这是一个学生信息管理系统的后台程序",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "StudentService"
+  },
+  "author": "lixinping",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.1"
+  }
+}
