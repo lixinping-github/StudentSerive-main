@@ -127,7 +127,52 @@ app.put("/addstudentinformation", (request, response) => {
         });
     }
 })
+//修改学生信息
+app.put("/updateStudent", (request, response) => {
 
+    console.log("修改学生信息的来了");
+    
+    const token = request.get("Authorization").split(" ").splice(1, 1);
+    const s = jsonwebtoken.verify(token[0], "dazhaxie");
+    console.log(request.body.data.userid)
+    if (s.userid) {
+        for(let i=0;i<STUDENTS_ARR.length;i++){
+            if( STUDENTS_ARR[i].userid === request.body.data.userid )   //这一步是非常关键的一步
+            {
+                STUDENTS_ARR.splice(i,1,{
+                    "userid": `${request.body.data.userid}`, "password": `${request.body.data.password}`, "name": `${request.body.data.name}`,
+                    "age": `${request.body.data.age}`, "gender": `${request.body.data.gender}`,
+                    "phone": `${request.body.data.phones}`
+                })
+            }
+            
+        }
+
+        const studentinformation = JSON.stringify(STUDENTS_ARR);
+        
+        fs.writeFile(
+            path.resolve(__dirname, "./data/user.json"),
+            studentinformation,
+            err => {
+                if (err) {
+                  console.error(err);
+                }}
+        );
+            
+                   
+                response.status(200).send({
+                    states: "OK",
+                });
+                // response.status(500).send({
+                //     states: "error",
+                // });
+    }
+    else {
+        response.status(200).send({
+            states: "error"
+        });
+    }
+})
 
 app.use((request,response,next)=>{
     const token = request.get("Authorization").split(" ").splice(1, 1);
